@@ -1,52 +1,100 @@
-
 function initializeObject(): void {
+  const jobID = (<HTMLInputElement>document.getElementById('jobID'));
+  const jobName = (<HTMLInputElement>document.getElementById("jobName"));
+  const description = (<HTMLTextAreaElement>document.getElementById('jobDes'));
+  const openings = (<HTMLInputElement>document.getElementById('jobOpening'));
 
-    let jobID = (<HTMLInputElement>document.getElementById('jobID'));
-    let jobName = (<HTMLInputElement>document.getElementById("jobName"));
-    let Desc = (<HTMLTextAreaElement>document.getElementById('jobDes'));
-    let opening = (<HTMLInputElement>document.getElementById('jobOpening'));
-    let tableBody = <HTMLTableElement>document.getElementById('tbody')
-    let jobIDError = (<HTMLSpanElement>document.getElementById('jobID-error'));
-    let jobNameError = (<HTMLSpanElement>document.getElementById('jobName-error'));
-    let vacancy = (<HTMLSpanElement>document.getElementById('vac-error'));
-    let dec = (<HTMLSpanElement>document.getElementById('dec-error'));
-    jobIDError.innerText = ""
-    jobNameError.innerText = ""
-    vacancy.innerText = ""
-    dec.innerText = ""
+  const jobIDError = (<HTMLSpanElement>document.getElementById('jobID-error'));
+  const jobNameError = (<HTMLSpanElement>document.getElementById('jobName-error'));
+  const vacancyError = (<HTMLSpanElement>document.getElementById('vac-error'));
+  const descriptionError = (<HTMLSpanElement>document.getElementById('dec-error'));
 
-    let isBool: boolean = true;
-    if(!(jobID.value)){
-        jobIDError.innerText = "Please Enter a Job ID!"
-        isBool = false;
-    }
-    if(!(jobName.value)){
-        jobNameError.innerText = "Please Enter Job Title!";
-        isBool = false;
-    }
-    if(!(opening.value)){
-        vacancy.innerText = "Please enter total Vacancy!";
-        isBool = false;
-    }
-    if(!(Desc.value)){
-        dec.innerText = "Please Enter a Description!"
-        isBool = false;
-    }
+  jobIDError.innerText = "";
+  jobNameError.innerText = "";
+  vacancyError.innerText = "";
+  descriptionError.innerText = "";
 
-    if(isBool){
-        tableBody.innerHTML += `<tr> 
-            <td>${jobID.value}</td> 
-            <td>${jobName.value}</td> 
-            <td>${opening.value}</td> 
-            <td>${Desc.value}</td> 
-            <td><button class="btn btn-primary">Apply</button></td>
-            </tr>`;
+  let isValid = true;
 
-            jobID.value = "";
-            jobName.value = "";
-            Desc.value = "";
-            opening.value = "";
-    }
+  if (!jobID.value) {
+    jobIDError.innerText = "Please Enter a Job ID!";
+    isValid = false;
+  }
+  if (!jobName.value) {
+    jobNameError.innerText = "Please Enter Job Title!";
+    isValid = false;
+  }
+  if (!openings.value) {
+    vacancyError.innerText = "Please enter total Vacancy!";
+    isValid = false;
+  }
+  if (!description.value) {
+    descriptionError.innerText = "Please Enter a Description!";
+    isValid = false;
+  }
+
+  if (isValid) {
+    const newJob = {
+      jobID: jobID.value,
+      jobName: jobName.value,
+      description: description.value,
+      openings: openings.value
+    };
+
+
+    const jobs = JSON.parse(localStorage.getItem("jobs") || "[]");
+    jobs.push(newJob); 
+
+    localStorage.setItem("jobs", JSON.stringify(jobs));
+
+    jobID.value = "";
+    jobName.value = "";
+    description.value = "";
+    openings.value = "";
+
+    alert('Vacancy Created Successfully!');
+    displayJobs();
+  }
 }
 
-document.getElementById('createVac')?.addEventListener('click', initializeObject)
+function displayJobs(): void {
+  const tableBody = <HTMLTableElement>document.getElementById('table');
+  tableBody.innerHTML = ""; 
+
+  const jobs = JSON.parse(localStorage.getItem("jobs") || "[]");
+
+  if(jobs.length != 0){
+    tableBody.innerHTML = `<caption>List of Job Vacancies</caption>
+      <thead>
+        <tr>
+          <th>Job ID</th>
+          <th>Job Name</th>
+          <th>Openings</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>`
+    jobs.forEach((job: { jobID: string; jobName: string; description: string; openings: string }) => {
+      tableBody.innerHTML += `<tr>
+        <td>${job.jobID}</td>
+        <td>${job.jobName}</td>
+        <td>${job.openings}</td>
+        <td>${job.description}</td>
+        <td><button class="btn btn-primary apply-btn">Apply</button></td>
+      </tr>`;
+    });
+  }else{
+    tableBody.innerHTML = `<h1> There is No opening at the moments</h1>`
+  }
+
+}
+
+window.onload = displayJobs;
+
+document.getElementById('createVac')?.addEventListener('click', initializeObject);
+
+
+function applyApplication(){
+  
+}
+document.getElementById('apply-btn')?.addEventListener('click', applyApplication)
