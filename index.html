@@ -12,65 +12,68 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
-<body style=" background-color: black;">
-  <!-- <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">Hiring</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="#" onclick="navigateTo('home')"></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" onclick="navigateTo('history')"></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav> -->
-  <div class="vacancy container">
-    <div class="mb-3 mt-3">
-      <label for="jobID" class="form-label text-light">JOB ID</label>
-      <input type="number" class="form-control text-light" id="jobID">
-      <span id="jobID-error" class="text-danger"></span>
+<body class="bg-black text-light">
+  <nav id="navbar" class="navbar navbar-expand-lg navbar-dark bg-black border-bottom">
+    <div class="container">
+      <a class="navbar-brand" href="#">Hiring</a>
     </div>
-    <div class="mb-3">
-      <label for="jobName" class="form-label text-light">JOB NAME</label>
-      <input type="text" class="form-control" id="jobName">
-      <span id="jobName-error" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-      <label for="jobOpening" class="form-label text-light">JOB OPENING</label>
-      <input type="number" class="form-control" id="jobOpening">
-      <span id="vac-error" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-      <label for="jobDes" class="form-label text-light">DESCRIPTION</label>
-      <textarea rows="4" class="form-control" id="jobDes"></textarea>
-      <span id="dec-error" class="text-danger"></span>
-    </div>
-    <button class="btn btn-primary" id="createVac">Create Vacancy</button>
-  </div>
+  </nav>
 
-  <div class="container mt-5 ">
-    <table class="table table-dark table-striped" id="table">
-      <caption></caption>
+  <div class="container mt-5">
+    <table class="table table-dark table-striped text-center" id="table">
+      <caption>List of Job Vacancies</caption>
       <thead>
-        <th>Job ID</th>
-        <th>Job Name</th>
-        <th>Openings</th>
-        <th>Description</th>
-        <th></th>
+        <tr>
+          <th>Job ID</th>
+          <th>Job Name</th>
+          <th>Openings</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody id="tbody">
-
       </tbody>
     </table>
   </div>
-  
+
+  <div class="container mt-4 d-none">
+    <h3 class="text-center">Job Application</h3>
+    <div class="card bg-dark text-light p-4">
+      <form>
+        <div class="mb-3">
+          <label for="jobName" class="form-label">JOB NAME</label>
+          <input type="text" class="form-control bg-dark text-light" id="jobName" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control bg-dark text-light" id="firstName">
+          <span id="firstName-error" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control bg-dark text-light" id="lastName">
+          <span id="lastName-error" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+          <label for="experience" class="form-label">Experience (in years)</label>
+          <input type="number" class="form-control bg-dark text-light" id="experience">
+          <span id="experience-error" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" class="form-control bg-dark text-light" id="location">
+          <span id="location-error" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+          <label for="expectedCTC" class="form-label">Expected CTC</label>
+          <input type="number" class="form-control bg-dark text-light" id="expectedCTC">
+          <span id="expectedCTC-error" class="text-danger"></span>
+        </div>
+        <button type="button" class="btn btn-primary" id="submitApplication">Submit Application</button>
+      </form>
+    </div>
+  </div>
+
   <script src="/src/main.ts"></script>
 </body>
 
